@@ -28,7 +28,13 @@ def main():
     print(f"{get_word_count(book_text)} words")
 
     letter_dict = get_letter_dict(book_text)
-    print(letter_dict)
+
+    letter_list = [{'name':k, 'num':letter_dict[k]} for k in letter_dict]
+    print(letter_list)
+
+    sort_on = lambda d: d['num']
+    letter_list.sort(key=sort_on, reverse=True)
+    print(letter_list)
 
 
 main()
