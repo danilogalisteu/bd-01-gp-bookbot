@@ -1,43 +1,30 @@
+from stats import get_num_words, get_letter_dict, sort_letter_dict
 
 
-def get_file_text(path):
+def get_book_text(path):
     file_contents = ""
     with open(path, 'r') as f:
         file_contents = f.read()
     return file_contents
 
 
-def get_word_count(text):
-    return len(text.split())
-
-
-def get_letter_dict(text):
-    letter_dict = {}
-    for letter in text.lower():
-        if letter in letter_dict:
-            letter_dict[letter] += 1
-        else:
-            letter_dict[letter] = 1
-    return letter_dict
-
-
 def main():
     book_path = "books/frankenstein.txt"
-    print(f"--- Begin report of {book_path} ---")
+    print("============ BOOKBOT ============")
+    print(f"Analyzing book found at {book_path}...")
 
-    book_text = get_file_text(book_path)
-    print(f"{get_word_count(book_text)} words found in the document\n")
+    book_text = get_book_text(book_path)
+    print("----------- Word Count ----------")
+    print(f"Found {get_num_words(book_text)} total words")
 
+    print("--------- Character Count -------")
     letter_dict = get_letter_dict(book_text)
-
-    letter_list = [{'name':k, 'num':letter_dict[k]} for k in letter_dict]
-
-    sort_on = lambda d: d['num']
-    letter_list.sort(key=sort_on, reverse=True)
-
+    letter_list = sort_letter_dict(letter_dict)
     for letter in letter_list:
         if letter['name'].isalpha():
-            print(f"The '{letter['name']}' character was found {letter['num']} times")
+            print(f"{letter['name']}: {letter['num']}")
 
+    print("============= END ===============")
 
-main()
+if __name__ == "__main__":
+    main()
